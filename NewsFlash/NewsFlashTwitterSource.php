@@ -57,20 +57,28 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	public function getItems($max_length = 10, $force_clear_cache = false)
 	{
 		if ($this->items === null) {
-			foreach ($this->getTimeline() as $status) {
+			$count = 0;
+			$statuses = $this->getTimeline($max_length, $force_clear_cache);
+			foreach ($statuses as $status) {
+				$count++;
+				if ($count > $max_length) {
+					break;
+				}
+
 				$this->items[] = new NewsFlashTwitterItem(
 					$this->username,
 					$status
 				);
 			}
 		}
+
 		return $this->items;
 	}
 
 	// }}}
 	// {{{ protected function getTimeline()
 
-	protected function getTimeline()
+	protected function getTimeline($max_length, $force_clear_cache)
 	{
 		$twitter = $this->getTwitter();
 		$params = array('id' => $this->username);
@@ -103,6 +111,14 @@ class NewsFlashTwitterSource extends NewsFlashSource
 		}
 
 		return $this->twitter;
+	}
+
+	// }}}
+	// {{{ protected function getCacheKey()
+
+	protected function getCacheKey($max_length = 10)
+	{
+		return 'nf-twitter-'.$this->username.intval($max_length);
 	}
 
 	// }}}

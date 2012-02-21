@@ -31,6 +31,11 @@ abstract class NewsFlashSource
 		$force_cache_update = false);
 
 	// }}}
+	// {{{ abstract protected function getCacheKey()
+
+	abstract protected function getCacheKey($max_length = 10);
+
+	// }}}
 }
 
 ?>
