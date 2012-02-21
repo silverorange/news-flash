@@ -60,23 +60,40 @@ $package->addReplacement(
 
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
+
+$package->addPackageDepWithChannel(
+	'required',
+	'Swat',
+	'pear.silverorange.com',
+	'0.9.2'
+);
+
 $package->addPackageDepWithChannel(
 	'required',
 	'Site',
 	'pear.silverorange.com',
 	'1.5.25'
 );
+
 $package->addPackageDepWithChannel(
 	'required',
 	'HTTP_Request2',
 	'pear.php.net',
 	'0.5.2'
 );
+
 $package->addPackageDepWithChannel(
 	'optional',
 	'Services_Twitter',
 	'pear.php.net',
 	'0.5.1'
+);
+
+$package->addPackageDepWithChannel(
+	'optional',
+	'Sniftr',
+	'pear.silverorange.com',
+	'0.1.6'
 );
 $package->addExtensionDep('optional', 'json');
 $package->addExtensionDep('required', 'dom');
