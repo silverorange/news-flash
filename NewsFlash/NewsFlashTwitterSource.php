@@ -54,11 +54,12 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	// }}}
 	// {{{ public function getItems()
 
-	public function getItems($max_length = 10, $force_clear_cache = false)
+	public function getItems($max_length = 10, $force_cache_update = false)
 	{
 		if ($this->items === null) {
+			$this->items = array();
 			$count = 0;
-			$statuses = $this->getTimeline($max_length, $force_clear_cache);
+			$statuses = $this->getTimeline($max_length, $force_cache_update);
 			foreach ($statuses as $status) {
 				$count++;
 				if ($count > $max_length) {
@@ -78,7 +79,7 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	// }}}
 	// {{{ protected function getTimeline()
 
-	protected function getTimeline($max_length, $force_clear_cache)
+	protected function getTimeline($max_length, $force_cache_update)
 	{
 		$twitter = $this->getTwitter();
 		$params = array('id' => $this->username);
