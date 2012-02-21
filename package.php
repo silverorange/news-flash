@@ -67,13 +67,19 @@ $package->addPackageDepWithChannel(
 	'1.5.25'
 );
 $package->addPackageDepWithChannel(
+	'required',
+	'HTTP_Request2',
+	'pear.php.net',
+	'0.5.2'
+);
+$package->addPackageDepWithChannel(
 	'optional',
 	'Services_Twitter',
 	'pear.php.net',
 	'0.5.1'
 );
-$package->addExtensionDep('required', 'curl');
-$package->addExtensionDep('required', 'json');
+$package->addExtensionDep('optional', 'json');
+$package->addExtensionDep('required', 'dom');
 
 $package->generateContents();
 
