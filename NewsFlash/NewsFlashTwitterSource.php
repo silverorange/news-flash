@@ -54,13 +54,13 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	// }}}
 	// {{{ public function getItems()
 
-	public function getItems($max_length = 10)
+	public function getItems($max_length = 10, $force_clear_cache = false)
 	{
 		if ($this->items === null) {
 			foreach ($this->getTimeline() as $status) {
 				$this->items[] = new NewsFlashTwitterItem(
 					$this->username,
-					$source
+					$status
 				);
 			}
 		}

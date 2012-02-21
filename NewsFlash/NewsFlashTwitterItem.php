@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatString.php';
 require_once 'NewsFlash/NewsFlashItem.php';
 
 /**
@@ -43,7 +44,7 @@ class NewsFlashTwitterItem extends NewsFlashItem
 
 	public function getBody()
 	{
-		return $this->status->text;
+		return SwatString::linkify($this->status->text);
 	}
 
 	// }}}
@@ -82,7 +83,7 @@ class NewsFlashTwitterItem extends NewsFlashItem
 
 	public function getDate()
 	{
-		$unix_time = $this->status->created_at;
+		$unix_time = strtotime($this->status->created_at);
 		$date = new SwatDate();
 		$date->setTimestamp($unix_time);
 		$date->toUTC();

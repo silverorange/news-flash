@@ -19,7 +19,7 @@ class NewsFlashFeed
 	// }}}
 	// {{{ public function addSource()
 
-	public function addSource(FrontPageFeedSource $source, $max_length = 10)
+	public function addSource(NewsFlashSource $source, $max_length = 10)
 	{
 		$this->sources[] = array(
 			'source'     => $source,
