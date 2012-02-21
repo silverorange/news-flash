@@ -78,8 +78,10 @@ class NewsFlashRSSItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon()
+	public function getIcon($secure = false)
 	{
+		$uri = null;
+
 		// check for gravatar
 		$media = $this->xpath->evaluate(
 			"string(media:content[".
@@ -87,7 +89,17 @@ class NewsFlashRSSItem extends NewsFlashItem
 			$this->element
 		);
 
-		return ($media == '') ? null : $media;
+		if ($media != '') {
+			list($base, $query) = explode('?', $media, 2);
+			$hash = array_pop(explode('/', $base));
+			if ($secure) {
+				$uri = 'https://secure.gravatar.com/avatar/'.$hash.'?s=32';
+			} else {
+				$uri = 'http://www.gravatar.com/avatar/'.$hash.'?s=32';
+			}
+		}
+
+		return $uri;
 	}
 
 	// }}}
