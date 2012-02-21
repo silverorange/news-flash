@@ -9,6 +9,104 @@ require_once 'NewsFlash/NewsFlashItem.php';
  */
 class NewsFlashRSSItem extends NewsFlashItem
 {
+	// {{{ protected properties
+
+	/**
+	 * @var DOMXPath
+	 */
+	protected $xpath = null;
+
+	/**
+	 * @var DOMElement
+	 */
+	protected $element = null;
+
+	// }}}
+	// {{{ public function __construct()
+
+	public function __construct(DOMXPath $xpath, DOMElement $element)
+	{
+		$this->xpath   = $xpath;
+		$this->element = $element;
+	}
+
+	// }}}
+	// {{{ public function getTitle()
+
+	public function getTitle()
+	{
+		$title = $this->xpath->evaluate(
+			"string(title)",
+			$this->element
+		);
+
+		return ($title == '') ? null : $title;
+	}
+
+	// }}}
+	// {{{ public function getBody()
+
+	public function getBody()
+	{
+		$description = $this->xpath->evaluate(
+			"string(description)",
+			$this->element
+		);
+
+		return ($description == '') ? null : $description;
+	}
+
+	// }}}
+	// {{{ public function getLink()
+
+	public function getLink()
+	{
+		return $this->xpath->evaluate(
+			"string(link)",
+			$this->element
+		);
+	}
+
+	// }}}
+	// {{{ public function getType()
+
+	public function getType()
+	{
+		return 'rss-item';
+	}
+
+	// }}}
+	// {{{ public function getIcon()
+
+	public function getIcon()
+	{
+		// check for gravatar
+		$media = $this->xpath->evaluate(
+			"string(media:content[".
+				"@medium='image' and contains(@url,'gravatar.com')]/@url)",
+			$this->element
+		);
+
+		return ($media == '') ? null : $media;
+	}
+
+	// }}}
+	// {{{ public function getDate()
+
+	public function getDate()
+	{
+		$date_string = $this->xpath->evaluate(
+			"string(pubDate)",
+			$this->element
+		);
+		$unix_time = strtotime($date_string);
+		$date = new SwatDate();
+		$date->setTimestamp($unix_time);
+		$date->toUTC();
+		return $date;
+	}
+
+	// }}}
 }
 
 ?>
