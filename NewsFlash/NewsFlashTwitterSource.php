@@ -16,6 +16,17 @@ class NewsFlashTwitterSource extends NewsFlashSource
 
 	const URI_ENDPOINT = 'http://twitter.com';
 
+	/**
+	 * The amount of time in minutes we wait before we update the cache
+	 */
+	const UPDATE_THRESHOLD = 5;
+
+	/**
+	 * The amount of time in minutes we wait before we try updating the cache
+	 * again if the cache failed to update
+	 */
+	const UPDATE_RETRY_THRESHOLD = 2;
+
 	// }}}
 	// {{{ protected properties
 
@@ -81,9 +92,85 @@ class NewsFlashTwitterSource extends NewsFlashSource
 
 	protected function getTimeline($max_length, $force_cache_update)
 	{
-		$twitter = $this->getTwitter();
-		$params = array('id' => $this->username);
-		$timeline = $twitter->statuses->user_timeline($params);
+		$loaded = false;
+		$last_update = 0;
+
+		$cache_key = $this->getCacheKey($max_length, $force_cache_update);
+
+		$cached_value = $this->app->getCacheValue($cache_key);
+		if ($cached_value !== false) {
+			$cached_value = unserialize($cached_value);
+			if (isset($cached_value['last_update']) &&
+				isset($cached_value['timeline'])) {
+				$last_update = $cached_value['last_update'] +
+					60 * self::UPDATE_THRESHOLD;
+			} else {
+				$cached_value = false;
+			}
+		}
+
+		// try to update the cache if the value is stale
+		if (time() > $last_update || $force_cache_update) {
+			try {
+				$twitter = $this->getTwitter();
+				$params = array('id' => $this->username);
+				$timeline = $twitter->statuses->user_timeline($params);
+				$loaded = true;
+
+				$value = array(
+					'timeline'    => $timeline,
+					'last_update' => time(),
+				);
+
+				$this->app->addCacheValue(serialize($value), $cache_key);
+			} catch (Services_Twitter_Exception $e) {
+				// We want to ignore any exceptions that occur because
+				// HTTP_Request2 either times out receiving the response or
+				// because we were unable to actually connect to Twitter.
+				// The only way to distinguish HTTP_Request2_Exceptions is to
+				// look at the exception's message.
+				$ignore = array(
+					'^Request timed out after [0-9]+ second\(s\)$',
+					'^Unable to connect to',
+					'^Rate limit exceeded.',
+					'^Internal Server Error$',
+				);
+
+				$regexp = sprintf('/%s/u', implode('|', $ignore));
+
+				if (preg_match($regexp, $e->getMessage()) === 1) {
+					// update the last update time on existing cached value so
+					// we rate-limit retries
+					if ($cached_value) {
+						$cached_value['last_update'] +=
+							(60 * (self::UPDATE_RETRY_THRESHOLD -
+							self::UPDATE_THRESHOLD));
+
+						$this->app->addCacheValue(
+							serialize($cached_value),
+							$cache_key
+						);
+					}
+				} elseif ($e->getCause() instanceof Exception) {
+					// Services_Twitter wraps all generated exceptions around
+					// their own Services_Twitter_Exception. You can retrieve
+					// the parent exception by using the
+					// PEAR_Exception::getCause() method.
+					$exception = new SwatException($e->getCause());
+					$exception->processAndContinue();
+				} else {
+					$exception = new SwatException($e);
+					$exception->processAndContinue();
+				}
+			}
+		}
+
+		// Use cached version if it is valid, or if we failed to update from
+		// the live feed.
+		if ($cached_value && !$loaded) {
+			$timeline = $cached_value['timeline'];
+		}
+
 		return $timeline;
 	}
 
