@@ -72,9 +72,24 @@ class NewsFlashTwitterItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon($secure = false)
+	public function getIcon($secure = false, $size = 32)
 	{
-		return 'packages/news-flash/images/twitter32.png';
+		switch ($size) {
+		case 72:
+			$icon = 'packages/news-flash/images/twitter72.png';
+			break;
+
+		case 48:
+			$icon = 'packages/news-flash/images/twitter48.png';
+			break;
+
+		case 32:
+		default:
+			$icon = 'packages/news-flash/images/twitter32.png';
+			break;
+		}
+
+		return $icon;
 	}
 
 	// }}}

@@ -78,7 +78,7 @@ class NewsFlashRSSItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon($secure = false)
+	public function getIcon($secure = false, $size = 32)
 	{
 		$uri = null;
 
@@ -92,11 +92,8 @@ class NewsFlashRSSItem extends NewsFlashItem
 		if ($media != '') {
 			list($base, $query) = explode('?', $media, 2);
 			$hash = array_pop(explode('/', $base));
-			if ($secure) {
-				$uri = 'https://secure.gravatar.com/avatar/'.$hash.'?s=32';
-			} else {
-				$uri = 'http://www.gravatar.com/avatar/'.$hash.'?s=32';
-			}
+			$base = ($secure) ? 'https://secure.' : 'http://www.';
+			$uri = $base.'gravatar.com/avatar/'.$hash.'?s='.intval($size);
 		}
 
 		return $uri;
