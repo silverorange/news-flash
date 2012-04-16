@@ -144,8 +144,25 @@ class NewsFlashRSSSource extends NewsFlashSource
 		try {
 			$response = $request->send();
 			$xml = $response->getBody();
+			$xml = $this->filterLiveXML($xml);
 		} catch (HTTP_Request2_Exception $e) {
 		}
+
+		return $xml;
+	}
+
+	// }}}
+	// {{{ protected function FilterLiveXML()
+
+	protected function FilterLiveXML($xml)
+	{
+		// filter out Wordpress tracking gifs
+		$xml = preg_replace(
+			'/<img alt="" border="0" '.
+			'src="https?:\/\/stats.wordpress.com\/[sb].gif[^"]+"[^>]+\/>/',
+			'',
+			$xml
+		);
 
 		return $xml;
 	}
