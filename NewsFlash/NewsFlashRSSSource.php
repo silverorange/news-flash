@@ -164,6 +164,15 @@ class NewsFlashRSSSource extends NewsFlashSource
 			$xml
 		);
 
+		// filter out the crappy Wordpress comment links
+		$xml = preg_replace(
+			'/<a [^>]*href='.
+			'"https?:\/\/feeds.wordpress.com\/[0-9\.]+\/gocomments[^"]+"[^>]*>'.
+			'<img [^>]*\/><\/a>/',
+			'',
+			$xml
+		);
+
 		return $xml;
 	}
 

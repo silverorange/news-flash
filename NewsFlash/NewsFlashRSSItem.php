@@ -46,12 +46,27 @@ class NewsFlashRSSItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody()
+	public function getBody($secure = false)
 	{
 		$description = $this->xpath->evaluate(
-			"string(description)",
+			"string(content:encoded)",
 			$this->element
 		);
+
+		if ($secure) {
+			$description = preg_replace(
+				'/(<img[^>]+src=")http:/',
+				'$1https:',
+				$description
+			);
+		}
+
+		if ($description == '') {
+			$description = $this->xpath->evaluate(
+				"string(description)",
+				$this->element
+			);
+		}
 
 		return ($description == '') ? null : $description;
 	}
