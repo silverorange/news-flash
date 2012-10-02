@@ -152,9 +152,9 @@ class NewsFlashRSSSource extends NewsFlashSource
 	}
 
 	// }}}
-	// {{{ protected function FilterLiveXML()
+	// {{{ protected function filterLiveXML()
 
-	protected function FilterLiveXML($xml)
+	protected function filterLiveXML($xml)
 	{
 		// filter out Wordpress tracking gifs
 		$xml = preg_replace(
