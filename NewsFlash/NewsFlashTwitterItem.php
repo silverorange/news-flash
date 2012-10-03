@@ -42,7 +42,7 @@ class NewsFlashTwitterItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody()
+	public function getBody($secure = false)
 	{
 		return SwatString::linkify($this->status->text);
 	}

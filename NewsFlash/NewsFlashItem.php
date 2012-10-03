@@ -14,7 +14,7 @@ abstract class NewsFlashItem
 	// }}}
 	// {{{ abstract public function getBody()
 
-	abstract public function getBody();
+	abstract public function getBody($secure = false);
 
 	// }}}
 	// {{{ abstract public function getLink()

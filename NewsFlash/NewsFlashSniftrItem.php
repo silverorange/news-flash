@@ -36,7 +36,7 @@ class NewsFlashSniftrItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody()
+	public function getBody($secure = false)
 	{
 		return $this->post->getBody();
 	}
