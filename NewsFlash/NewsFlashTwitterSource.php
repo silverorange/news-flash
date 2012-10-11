@@ -95,7 +95,7 @@ class NewsFlashTwitterSource extends NewsFlashSource
 		$loaded = false;
 		$last_update = 0;
 
-		$cache_key = $this->getCacheKey($max_length, $force_cache_update);
+		$cache_key = $this->getCacheKey($max_length);
 
 		$cached_value = $this->app->getCacheValue($cache_key);
 		if ($cached_value !== false) {
