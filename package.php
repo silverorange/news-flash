@@ -95,6 +95,14 @@ $package->addPackageDepWithChannel(
 	'pear.silverorange.com',
 	'0.1.6'
 );
+
+$package->addPackageDepWithChannel(
+	'optional',
+	'Deliverance',
+	'pear.silverorange.com',
+	'0.2.12'
+);
+
 $package->addExtensionDep('optional', 'json');
 $package->addExtensionDep('required', 'dom');
 
