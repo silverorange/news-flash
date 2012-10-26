@@ -95,35 +95,109 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 	protected function getCampaigns($max_length = 10,
 		$force_cache_update = false)
 	{
-		$group_campaigns = array();
+		$loaded = false;
+		$last_update = 0;
 
-		$map = array();
-		$interests = $this->getList()->getInterests();
-		foreach ($interests as $grouping) {
-			foreach ($grouping['groups'] as $group) {
-				if (in_array($group['name'], $this->groups)) {
-					$map[$group['name']] = $group['bit'];
-				}
+		$cache_key = $this->getCacheKey($max_length);
+
+		$cached_value = $this->app->getCacheValue($cache_key);
+		if ($cached_value !== false) {
+			$cached_value = unserialize($cached_value);
+			if (isset($cached_value['last_update']) &&
+				isset($cached_value['campaigns'])) {
+				$last_update = $cached_value['last_update'] +
+					60 * self::UPDATE_THRESHOLD;
+			} else {
+				$cached_value = false;
 			}
 		}
 
-		$campaigns = $this->getList()->getCampaigns(
-			array(
-				'status' => 'sent,sending'
-			)
-		);
+		// try to update the cache if the value is stale
+		if (time() > $last_update || $force_cache_update) {
+			try {
+				// get map of group names to group bits
+				$map = array();
+
+				if (count($this->groups) > 0) {
+					$interests = $this->getList()->getInterests();
+					foreach ($interests as $grouping) {
+						foreach ($grouping['groups'] as $group) {
+							if (in_array($group['name'], $this->groups)) {
+								$map[$group['name']] = $group['bit'];
+							}
+						}
+					}
+				}
+
+				$campaigns = $this->getList()->getCampaigns(
+					array(
+						'status' => 'sent,sending'
+					)
+				);
+
+				$campaigns = $this->filterCampaignsByInterestGroups(
+					$campaigns,
+					$map
+				);
+
+				$loaded = true;
+
+				$value = array(
+					'campaigns'   => $campaigns,
+					'last_update' => time(),
+				);
+
+				$this->app->addCacheValue(serialize($value), $cache_key);
+			} catch (DeliveranceAPIConnectionException $connection_exception) {
+				// update the last update time on existing cached value so
+				// we rate-limit retries
+				if ($cached_value) {
+					$cached_value['last_update'] +=
+						(60 * (self::UPDATE_RETRY_THRESHOLD -
+						self::UPDATE_THRESHOLD));
+
+					$this->app->addCacheValue(
+						serialize($cached_value),
+						$cache_key
+					);
+				}
+
+			} catch (DeliveranceException $exception) {
+				$exception->processAndContinue();
+			}
+		}
+
+		// Use cached version if it is valid, or if we failed to update from
+		// the live feed.
+		if ($cached_value && !$loaded) {
+			$campaigns = $cached_value['campaigns'];
+		}
+
+		return $campaigns;
+	}
+
+	// }}}
+	// {{{ protected function filterCampaignsByInterestGroups()
+
+	protected function filterCampaignsByInterestGroups(array $campaigns,
+		array $group_map)
+	{
+		$group_campaigns = array();
 
 		// filter by interest group
-		if (count($this->groups) > 0) {
+		if (count($this->groups) === 0) {
+			$group_campaigns = $campaigns;
+		} else {
 			foreach ($campaigns as $campaign) {
 				if (isset($campaign['segment_opts']) &&
 					isset($campaign['segment_opts']['conditions'])) {
 					$conditions = $campaign['segment_opts']['conditions'];
 					foreach ($conditions as $condition) {
-						if (strncmp($condition['field'], 'interests-', 10) === 0 &&
+						$field = $condition['field'];
+						if (strncmp($field, 'interests-', 10) === 0 &&
 							$condition['op'] == 'one') {
 							foreach ($condition['value'] as $value) {
-								if (in_array($value, $map)) {
+								if (in_array($value, $group_map)) {
 									$group_campaigns[] = $campaign;
 									break 2;
 								}
@@ -132,8 +206,6 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 					}
 				}
 			}
-		} else {
-			$group_campaigns = $campaigns;
 		}
 
 		return $group_campaigns;
