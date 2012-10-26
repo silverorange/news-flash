@@ -206,7 +206,7 @@ class NewsFlashTwitterSource extends NewsFlashSource
 
 	protected function getCacheKey($max_length = 10)
 	{
-		return 'nf-twitter-'.$this->username.intval($max_length);
+		return 'nf-twitter-'.$this->username.'-'.intval($max_length);
 	}
 
 	// }}}
