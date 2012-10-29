@@ -113,7 +113,11 @@ class NewsFlashTwitterSource extends NewsFlashSource
 		if (time() > $last_update || $force_cache_update) {
 			try {
 				$twitter = $this->getTwitter();
-				$params = array('screen_name' => $this->username);
+				$params = array(
+					'screen_name'     => $this->username,
+					'exclude_replies' => true,
+				);
+
 				$timeline = $twitter->statuses->user_timeline($params);
 				$loaded = true;
 
