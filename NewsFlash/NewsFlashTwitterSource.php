@@ -92,6 +92,7 @@ class NewsFlashTwitterSource extends NewsFlashSource
 
 	protected function getTimeline($max_length, $force_cache_update)
 	{
+		$timeline = array();
 		$loaded = false;
 		$last_update = 0;
 
