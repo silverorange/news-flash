@@ -95,6 +95,7 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 	protected function getCampaigns($max_length = 10,
 		$force_cache_update = false)
 	{
+		$campaigns = array();
 		$loaded = false;
 		$last_update = 0;
 
