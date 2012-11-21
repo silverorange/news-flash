@@ -68,6 +68,13 @@ class NewsFlashRSSItem extends NewsFlashItem
 			);
 		}
 
+		// Remove trailing <br>'s from sloppy blog platforms.
+		$description = preg_replace(
+			'!(\s*<br\s*/?\>\s*)*$!u',
+			'',
+			$description
+		);
+
 		return ($description == '') ? null : $description;
 	}
 
