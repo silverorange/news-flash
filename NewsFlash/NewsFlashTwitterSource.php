@@ -3,11 +3,13 @@
 require_once 'NewsFlash/NewsFlashSource.php';
 require_once 'NewsFlash/NewsFlashTwitterItem.php';
 require_once 'HTTP/Request2.php';
+require_once 'HTTP/OAuth/Consumer.php';
 require_once 'Services/Twitter.php';
+require_once 'NewsFlash/exceptions/NewsFlashTwitterSourceException.php';
 
 /**
  * @package   NewsFlash
- * @copyright 2012 silverorange
+ * @copyright 2012-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class NewsFlashTwitterSource extends NewsFlashSource
@@ -45,6 +47,11 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	 */
 	protected $twitter = null;
 
+	/**
+	 * @var HTTP_OAuth_Consumer
+	 */
+	protected $oauth_consumer = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -63,6 +70,28 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	}
 
 	// }}}
+	// {{{ public function setOAuthConsumer()
+
+	public function setOAuthConsumer(HTTP_OAuth_Consumer $consumer)
+	{
+		$this->oauth_consumer = $oauth_consumer;
+	}
+
+	// }}}
+	// {{{ public function createOAuthConsumer()
+
+	public function createOAuthConsumer($consumer_key, $consumer_secret,
+		$auth_token, $token_secret)
+	{
+		$this->oauth_consumer = new HTTP_OAuth_Consumer(
+			$consumer_key,
+			$consumer_secret,
+			$auth_token,
+			$token_secret
+		);
+	}
+
+	// }}}
 	// {{{ public function getItems()
 
 	public function getItems($max_length = 10, $force_cache_update = false)
@@ -70,7 +99,9 @@ class NewsFlashTwitterSource extends NewsFlashSource
 		if ($this->items === null) {
 			$this->items = array();
 			$count = 0;
+
 			$statuses = $this->getTimeline($max_length, $force_cache_update);
+
 			foreach ($statuses as $status) {
 				$count++;
 				if ($count > $max_length) {
@@ -114,10 +145,19 @@ class NewsFlashTwitterSource extends NewsFlashSource
 		if (time() > $last_update || $force_cache_update) {
 			try {
 				$twitter = $this->getTwitter();
+
 				$params = array(
 					'screen_name'     => $this->username,
 					'exclude_replies' => true,
 				);
+
+				if ($this->oauth_consumer instanceof HTTP_OAuth_Consumer) {
+					$twitter->setOAuth($this->oauth_consumer);
+				} else {
+					throw new NewsFlashTwitterSourceException(
+						'Twitter OAuth Consumer not set.'
+					);
+				}
 
 				$timeline = $twitter->statuses->user_timeline($params);
 				$loaded = true;
@@ -161,10 +201,13 @@ class NewsFlashTwitterSource extends NewsFlashSource
 					// their own Services_Twitter_Exception. You can retrieve
 					// the parent exception by using the
 					// PEAR_Exception::getCause() method.
-					$exception = new SwatException($e->getCause());
+					$exception = new NewsFlashTwitterSourceException(
+						$e->getCause()
+					);
+
 					$exception->processAndContinue();
 				} else {
-					$exception = new SwatException($e);
+					$exception = new NewsFlashTwitterSourceException($e);
 					$exception->processAndContinue();
 				}
 			}
@@ -197,9 +240,15 @@ class NewsFlashTwitterSource extends NewsFlashSource
 				null,
 				null,
 				array(
-					'format' => Services_Twitter::OUTPUT_JSON
+					'format'  => Services_Twitter::OUTPUT_JSON,
+					'use_ssl' => true,
 				)
 			);
+
+			// Services_Twitter is set to API v1, which is dead. Remove this
+			// when Services_Twitter has a new release.
+			Services_Twitter::$uri = 'https://api.twitter.com/1.1';
+
 			$this->twitter->setRequest($request);
 		}
 

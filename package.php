@@ -91,6 +91,13 @@ $package->addPackageDepWithChannel(
 
 $package->addPackageDepWithChannel(
 	'optional',
+	'HTTP_OAuth',
+	'pear.php.net',
+	'0.2.3'
+);
+
+$package->addPackageDepWithChannel(
+	'optional',
 	'Sniftr',
 	'pear.silverorange.com',
 	'0.1.6'
