@@ -168,6 +168,34 @@ class NewsFlashTwitterSource extends NewsFlashSource
 				);
 
 				$this->app->addCacheValue(serialize($value), $cache_key);
+			} catch (HTTP_OAuth_Exception $e) {
+				// We want to ignore any exceptions that occur because
+				// we were unable to actually connect to Twitter. The only way
+				// to distinguish HTTP_OAuth_Exceptions is to look at the
+				// exception's message.
+				$ignore = array(
+					'^Unable to connect to .* Error: Connection timed out$',
+				);
+
+				$regexp = sprintf('/%s/u', implode('|', $ignore));
+
+				if (preg_match($regexp, $e->getMessage()) === 1) {
+					// update the last update time on existing cached value so
+					// we rate-limit retries
+					if ($cached_value) {
+						$cached_value['last_update'] +=
+							(60 * (self::UPDATE_RETRY_THRESHOLD -
+							self::UPDATE_THRESHOLD));
+
+						$this->app->addCacheValue(
+							serialize($cached_value),
+							$cache_key
+						);
+					}
+				} else {
+					$exception = new NewsFlashTwitterSourceException($e);
+					$exception->processAndContinue();
+				}
 			} catch (Services_Twitter_Exception $e) {
 				// We want to ignore any exceptions that occur because
 				// HTTP_Request2 either times out receiving the response or
