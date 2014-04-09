@@ -15,11 +15,6 @@ class NewsFlash
 	// {{{ constants
 
 	/**
-	 * The package identifier
-	 */
-	const PACKAGE_ID = 'NewsFlash';
-
-	/**
 	 * The gettext domain for this package
 	 *
 	 * This is used to support multiple locales.
