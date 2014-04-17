@@ -107,7 +107,7 @@ $package->addPackageDepWithChannel(
 	'optional',
 	'Deliverance',
 	'pear.silverorange.com',
-	'0.2.12'
+	'0.2.33'
 );
 
 $package->addExtensionDep('optional', 'json');

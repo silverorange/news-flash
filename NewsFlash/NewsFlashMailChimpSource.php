@@ -120,7 +120,7 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 				$map = array();
 
 				if (count($this->groups) > 0) {
-					$interests = $this->getList()->getInterests();
+					$interests = $this->getList()->getInterestGroupings();
 					foreach ($interests as $grouping) {
 						foreach ($grouping['groups'] as $group) {
 							if (in_array($group['name'], $this->groups)) {
