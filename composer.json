@@ -1,0 +1,43 @@
+{
+	"name": "silverorange/news_flash",
+	"description": "News source aggregator.",
+	"type": "library",
+	"keywords": [ "rss", "twitter", "aggregator", "tumblr" ],
+	"homepage": "https://github.com/silverorange/news-flash",
+	"license": "LGPL-2.1",
+	"authors": [
+		{
+			"name": "Charles Waddell",
+			"email": "charles@silverorange.com"
+		},
+		{
+			"name": "Isaac Grant",
+			"email": "isaac@silverorange.com"
+		},
+		{
+			"name": "Michael Gauthier",
+			"email": "mike@silverorange.com"
+		}
+	],
+	"require": {
+		"php": ">=5.2.1",
+		"ext-dom": "*",
+		"ext-json": "*",
+		"pear/http_request2": "^2.0.0",
+		"silverorange/site": "^2.1.45",
+		"silverorange/swat": "^2.2.10",
+		"silverorange/silverorange_autoloader": "*"
+	},
+	"suggest": {
+		"pear/http_oauth": "OAuth support for Twitter.",
+		"pear/services_twitter": "Twitter news source support.",
+		"silverorange/deliverance": "Newsletter news source support.",
+		"silverorange/sniftr": "Tumblr news source support."
+	},
+	"autoload": {
+		"files": [ "autoload.php" ]
+	},
+	"include-path": [
+		"./"
+	]
+}
