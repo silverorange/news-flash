@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.5" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>NewsFlash</name>
+ <channel>pear.silverorange.com</channel>
+ <summary>News aggregator</summary>
+ <description>Composite aggregation of news items for use with the Site package.</description>
+ <lead>
+  <name>Mike Gauthier</name>
+  <user>gauthierm</user>
+  <email>mike@silverorange.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2016-01-16</date>
+ <time>22:51:30</time>
+ <version>
+  <release>0.1.15</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+ <notes>
+No release notes for you!
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <dir name="NewsFlash">
+    <dir name="exceptions">
+     <file name="NewsFlashTwitterSourceException.php" role="php" />
+    </dir> <!-- /NewsFlash/exceptions -->
+    <file name="NewsFlash.php" role="php">
+     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    </file>
+    <file name="NewsFlashFeed.php" role="php" />
+    <file name="NewsFlashItem.php" role="php" />
+    <file name="NewsFlashMailChimpItem.php" role="php" />
+    <file name="NewsFlashMailChimpSource.php" role="php" />
+    <file name="NewsFlashRSSItem.php" role="php" />
+    <file name="NewsFlashRSSSource.php" role="php" />
+    <file name="NewsFlashSniftrItem.php" role="php" />
+    <file name="NewsFlashSniftrSource.php" role="php" />
+    <file name="NewsFlashSource.php" role="php" />
+    <file name="NewsFlashTwitterItem.php" role="php" />
+    <file name="NewsFlashTwitterSource.php" role="php" />
+   </dir> <!-- /NewsFlash -->
+   <dir name="www">
+    <dir name="images">
+     <file name="mailchimp32.png" role="data" />
+     <file name="mailchimp48.png" role="data" />
+     <file name="mailchimp72.png" role="data" />
+     <file name="tumblr32.png" role="data" />
+     <file name="tumblr48.png" role="data" />
+     <file name="tumblr72.png" role="data" />
+     <file name="twitter32.png" role="data" />
+     <file name="twitter48.png" role="data" />
+     <file name="twitter72.png" role="data" />
+    </dir> <!-- /www/images -->
+   </dir> <!-- /www -->
+   <file name="autoload.php" role="data" />
+   <file name="composer.json" role="data" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>Swat</name>
+    <channel>pear.silverorange.com</channel>
+    <min>0.9.2</min>
+   </package>
+   <package>
+    <name>Site</name>
+    <channel>pear.silverorange.com</channel>
+    <min>1.5.25</min>
+   </package>
+   <package>
+    <name>HTTP_Request2</name>
+    <channel>pear.php.net</channel>
+    <min>0.5.2</min>
+   </package>
+   <extension>
+    <name>dom</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>Services_Twitter</name>
+    <channel>pear.php.net</channel>
+    <min>0.5.1</min>
+   </package>
+   <package>
+    <name>HTTP_OAuth</name>
+    <channel>pear.php.net</channel>
+    <min>0.2.3</min>
+   </package>
+   <package>
+    <name>Sniftr</name>
+    <channel>pear.silverorange.com</channel>
+    <min>0.1.6</min>
+   </package>
+   <package>
+    <name>Deliverance</name>
+    <channel>pear.silverorange.com</channel>
+    <min>0.2.33</min>
+   </package>
+   <extension>
+    <name>json</name>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1.15</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2016-01-16</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+   <notes>
+No release notes for you!
+   </notes>
+  </release>
+ </changelog>
+</package>
