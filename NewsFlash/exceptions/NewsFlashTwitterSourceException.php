@@ -6,7 +6,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Exception caused by twitter source in NewsFlash.
  *
  * @package   NewsFlash
- * @copyright 2013 silverorange
+ * @copyright 2013-2016 silverorange
  */
 class NewsFlashTwitterSourceException extends SwatException
 {

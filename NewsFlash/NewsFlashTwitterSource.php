@@ -9,7 +9,7 @@ require_once 'NewsFlash/exceptions/NewsFlashTwitterSourceException.php';
 
 /**
  * @package   NewsFlash
- * @copyright 2012-2013 silverorange
+ * @copyright 2012-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class NewsFlashTwitterSource extends NewsFlashSource

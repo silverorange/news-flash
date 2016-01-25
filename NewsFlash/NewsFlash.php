@@ -7,7 +7,7 @@ require_once 'Site/Site.php';
  * Container for package wide static methods
  *
  * @package   NewsFlash
- * @copyright 2012-2014 silverorange
+ * @copyright 2012-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class NewsFlash
