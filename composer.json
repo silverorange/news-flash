@@ -25,8 +25,7 @@
 		"ext-json": "*",
 		"pear/http_request2": "^2.0.0",
 		"silverorange/site": "^2.1.45",
-		"silverorange/swat": "^2.2.10",
-		"silverorange/silverorange_autoloader": "*"
+		"silverorange/swat": "^2.2.10"
 	},
 	"suggest": {
 		"pear/http_oauth": "OAuth support for Twitter.",
@@ -35,7 +34,7 @@
 		"silverorange/sniftr": "Tumblr news source support."
 	},
 	"autoload": {
-		"files": [ "autoload.php" ]
+		"classmap": [ "NewsFlash/" ]
 	},
 	"include-path": [
 		"./"
