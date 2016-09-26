@@ -24,7 +24,7 @@
 		"ext-dom": "*",
 		"ext-json": "*",
 		"pear/http_request2": "^2.0.0",
-		"silverorange/site": "^3.0.0",
+		"silverorange/site": "^4.0.0",
 		"silverorange/swat": "^2.2.10"
 	},
 	"suggest": {
