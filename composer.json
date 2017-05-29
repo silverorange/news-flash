@@ -24,8 +24,8 @@
 		"ext-dom": "*",
 		"ext-json": "*",
 		"pear/http_request2": "^2.0.0",
-		"silverorange/site": "^4.0.0",
-		"silverorange/swat": "^2.2.10"
+		"silverorange/site": "^4.11.0",
+		"silverorange/swat": "^2.7.0"
 	},
 	"suggest": {
 		"pear/http_oauth": "OAuth support for Twitter.",
