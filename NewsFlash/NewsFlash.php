@@ -1,13 +1,10 @@
 <?php
 
-require_once 'Swat/Swat.php';
-require_once 'Site/Site.php';
-
 /**
  * Container for package wide static methods
  *
  * @package   NewsFlash
- * @copyright 2012-2016 silverorange
+ * @copyright 2012-2017 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class NewsFlash
@@ -20,6 +17,16 @@ class NewsFlash
 	 * This is used to support multiple locales.
 	 */
 	const GETTEXT_DOMAIN = 'news-flash';
+
+	// }}}
+	// {{{ private properties
+
+	/**
+	 * Whether or not this package is initialized
+	 *
+	 * @var boolean
+	 */
+	private static $is_initialized = false;
 
 	// }}}
 	// {{{ public static function _()
@@ -118,38 +125,33 @@ class NewsFlash
 	}
 
 	// }}}
-}
+	// {{{ public static function init()
 
-// {{{ dummy dngettext()
-
-/*
- * Define a dummy dngettext() for when gettext is not available.
- */
-if (!function_exists("dngettext")) {
-	function dngettext($domain, $messageid1, $messageid2, $n)
+	public static function init()
 	{
-		if ($n == 1)
-			return $messageid1;
+		if (self::$is_initialized) {
+			return;
+		}
 
-		return $messageid2;
-    }
-}
+		Swat::init();
+		Site::init();
 
-// }}}
-// {{{ dummy dgettext()
+		self::setupGettext();
 
-/*
- * Define a dummy dgettext() for when gettext is not available.
- */
-if (!function_exists("dgettext")) {
-	function dgettext($domain, $messageid)
-	{
-		return $messageid;
+		self::$is_initialized = true;
 	}
+
+	// }}}
+	// {{{ private function __construct()
+
+	/**
+	 * Prevent instantiation of this static class
+	 */
+	private function __construct()
+	{
+	}
+
+	// }}}
 }
-
-// }}}
-
-NewsFlash::setupGettext();
 
 ?>
