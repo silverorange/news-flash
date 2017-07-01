@@ -1,9 +1,5 @@
 <?php
 
-require_once 'NewsFlash/NewsFlashSource.php';
-require_once 'NewsFlash/NewsFlashRSSItem.php';
-require_once 'HTTP/Request2.php';
-
 /**
  * @package   NewsFlash
  * @copyright 2012-2016 silverorange

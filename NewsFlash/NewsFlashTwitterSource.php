@@ -1,12 +1,5 @@
 <?php
 
-require_once 'NewsFlash/NewsFlashSource.php';
-require_once 'NewsFlash/NewsFlashTwitterItem.php';
-require_once 'HTTP/Request2.php';
-require_once 'HTTP/OAuth/Consumer.php';
-require_once 'Services/Twitter.php';
-require_once 'NewsFlash/exceptions/NewsFlashTwitterSourceException.php';
-
 /**
  * @package   NewsFlash
  * @copyright 2012-2016 silverorange
