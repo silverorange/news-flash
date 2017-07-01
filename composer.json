@@ -35,8 +35,5 @@
 	},
 	"autoload": {
 		"classmap": [ "NewsFlash/" ]
-	},
-	"include-path": [
-		"./"
-	]
+	}
 }
