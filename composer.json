@@ -41,23 +41,23 @@
 		"silverorange/site": "^4.11.0",
 		"silverorange/swat": "^2.7.0"
 	},
+	"require-dev": {
+		"silverorange/coding-standard": "^0.1.0"
+	},
 	"suggest": {
 		"pear/http_oauth": "OAuth support for Twitter.",
 		"pear/services_twitter": "Twitter news source support.",
 		"silverorange/deliverance": "Newsletter news source support.",
 		"silverorange/sniftr": "Tumblr news source support."
 	},
+	"scripts": {
+		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
+		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+	},
 	"autoload": {
 		"classmap": [ "NewsFlash/" ]
 	},
 	"include-path": [
 		"./"
-	],
-	"scripts": {
-		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
-		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
-	},
-	"require-dev": {
-		"silverorange/coding-standard": "^0.1.0"
-	}
+	]
 }
