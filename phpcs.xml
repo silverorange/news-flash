@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="NewsFlash">
+  <arg name="colors" />
+  <arg name="tab-width" value="4" />
+  <arg name="extensions" value="php" />
+  <arg name="encoding" value="utf-8" />
+  <arg name="warning-severity" value="0" />
+  <arg value="p" /><!-- show progress -->
+
+  <file>./NewsFlash</file>
+
+  <rule ref="SilverorangeLegacy" />
+</ruleset>
