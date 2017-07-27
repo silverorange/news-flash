@@ -111,7 +111,8 @@ class NewsFlashRSSItem extends NewsFlashItem
 
 		if ($media != '') {
 			list($base, $query) = explode('?', $media, 2);
-			$hash = array_pop(explode('/', $base));
+			$parts = explode('/', $base);
+			$hash = array_pop($parts);
 			$base = ($secure) ? 'https://secure.' : 'http://www.';
 			$uri = $base.'gravatar.com/avatar/'.$hash.'?s='.intval($size);
 		}
