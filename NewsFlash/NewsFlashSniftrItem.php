@@ -1,8 +1,5 @@
 <?php
 
-require_once 'Swat/SwatString.php';
-require_once 'NewsFlash/NewsFlashItem.php';
-
 /**
  * @package   NewsFlash
  * @copyright 2012-2016 silverorange

@@ -38,8 +38,8 @@
 		"ext-dom": "*",
 		"ext-json": "*",
 		"pear/http_request2": "^2.0.0",
-		"silverorange/site": "^4.11.0",
-		"silverorange/swat": "^2.7.0"
+		"silverorange/site": "^5.0.0",
+		"silverorange/swat": "^3.0.0"
 	},
 	"require-dev": {
 		"silverorange/coding-standard": "^0.4.0"
@@ -57,8 +57,5 @@
 	},
 	"autoload": {
 		"classmap": [ "NewsFlash/" ]
-	},
-	"include-path": [
-		"./"
-	]
+	}
 }

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * Exception caused by twitter source in NewsFlash.
  *

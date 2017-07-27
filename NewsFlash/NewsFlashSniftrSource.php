@@ -1,9 +1,5 @@
 <?php
 
-require_once 'NewsFlash/NewsFlashSource.php';
-require_once 'NewsFlash/NewsFlashSniftrItem.php';
-require_once 'Sniftr/SniftrReader.php';
-
 /**
  * @package   NewsFlash
  * @copyright 2012-2016 silverorange

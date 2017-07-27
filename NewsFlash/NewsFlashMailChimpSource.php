@@ -1,9 +1,5 @@
 <?php
 
-require_once 'NewsFlash/NewsFlashSource.php';
-require_once 'NewsFlash/NewsFlashMailChimpItem.php';
-require_once 'Deliverance/DeliveranceMailChimpList.php';
-
 /**
  * @package   NewsFlash
  * @copyright 2012-2016 silverorange
