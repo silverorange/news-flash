@@ -46,9 +46,11 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 	// }}}
 	// {{{ public function __construct()
 
-	public function __construct(SiteApplication $app, $list_name,
-		$groups = array())
-	{
+	public function __construct(
+		SiteApplication $app,
+		$list_name,
+		$groups = array()
+	) {
 		parent::__construct($app);
 
 		$this->list_name = $list_name;
@@ -88,9 +90,10 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 	// }}}
 	// {{{ protected function getCampaigns()
 
-	protected function getCampaigns($max_length = 10,
-		$force_cache_update = false)
-	{
+	protected function getCampaigns(
+		$max_length = 10,
+		$force_cache_update = false
+	) {
 		$campaigns = array();
 		$loaded = false;
 		$last_update = 0;
@@ -176,9 +179,10 @@ class NewsFlashMailChimpSource extends NewsFlashSource
 	// }}}
 	// {{{ protected function filterCampaignsByInterestGroups()
 
-	protected function filterCampaignsByInterestGroups(array $campaigns,
-		array $group_map)
-	{
+	protected function filterCampaignsByInterestGroups(
+		array $campaigns,
+		array $group_map
+	) {
 		$group_campaigns = array();
 
 		// filter by interest group
