@@ -25,8 +25,10 @@ abstract class NewsFlashSource
 	// }}}
 	// {{{ abstract public function getItems()
 
-	abstract public function getItems($max_length = 10,
-		$force_cache_update = false);
+	abstract public function getItems(
+		$max_length = 10,
+		$force_cache_update = false
+	);
 
 	// }}}
 	// {{{ abstract protected function getCacheKey()

@@ -73,9 +73,12 @@ class NewsFlashTwitterSource extends NewsFlashSource
 	// }}}
 	// {{{ public function createOAuthConsumer()
 
-	public function createOAuthConsumer($consumer_key, $consumer_secret,
-		$auth_token, $token_secret)
-	{
+	public function createOAuthConsumer(
+		$consumer_key,
+		$consumer_secret,
+		$auth_token,
+		$token_secret
+	) {
 		$this->oauth_consumer = new HTTP_OAuth_Consumer(
 			$consumer_key,
 			$consumer_secret,
