@@ -97,11 +97,7 @@ class NewsFlash
 
 	public static function setupGettext()
 	{
-		$path = '@DATA-DIR@/NewsFlash/locale';
-		if (substr($path, 0, 1) === '@')
-			$path = dirname(__FILE__).'/../locale';
-
-		bindtextdomain(self::GETTEXT_DOMAIN, $path);
+		bindtextdomain(self::GETTEXT_DOMAIN, __DIR__.'/../locale');
 		bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
 	}
 
