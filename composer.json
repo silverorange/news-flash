@@ -22,12 +22,7 @@
 	"repositories": [
 		{
 			"type": "composer",
-			"url": "https://composer",
-			"options": {
-				"ssl": {
-					"cafile": "/etc/nginx/tls.crt/composer.crt"
-				}
-			}
+			"url": "https://composer.silverorange.com"
 		},
 		{
 			"packagist": false
