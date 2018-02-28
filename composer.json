@@ -37,7 +37,7 @@
 		"silverorange/swat": "^3.0.0"
 	},
 	"require-dev": {
-		"silverorange/coding-standard": "^0.6.0"
+		"silverorange/coding-standard": "^1.0.0"
 	},
 	"suggest": {
 		"pear/http_oauth": "OAuth support for Twitter.",
