@@ -33,8 +33,8 @@
 		"ext-dom": "*",
 		"ext-json": "*",
 		"pear/http_request2": "^2.0.0",
-		"silverorange/site": "^7.0.0",
-		"silverorange/swat": "^4.0.0"
+		"silverorange/site": "^7.3.0",
+		"silverorange/swat": "^5.0.0"
 	},
 	"require-dev": {
 		"silverorange/coding-standard": "^1.0.0"
