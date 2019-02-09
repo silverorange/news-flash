@@ -33,7 +33,7 @@ class NewsFlashSniftrItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody($secure = false)
+	public function getBody()
 	{
 		return $this->post->getBody();
 	}
@@ -57,7 +57,7 @@ class NewsFlashSniftrItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon($secure = false, $size = 32)
+	public function getIcon($size = 32)
 	{
 		switch ($size) {
 		case 72:
