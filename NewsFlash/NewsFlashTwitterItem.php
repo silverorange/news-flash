@@ -39,7 +39,7 @@ class NewsFlashTwitterItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody($secure = false)
+	public function getBody()
 	{
 		return SwatString::linkify($this->status->text);
 	}
@@ -69,7 +69,7 @@ class NewsFlashTwitterItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon($secure = false, $size = 32)
+	public function getIcon($size = 32)
 	{
 		switch ($size) {
 		case 72:
