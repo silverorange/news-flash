@@ -44,20 +44,18 @@ class NewsFlashRSSItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getBody()
 
-	public function getBody($secure = false)
+	public function getBody()
 	{
 		$description = $this->xpath->evaluate(
 			"string(content:encoded)",
 			$this->element
 		);
 
-		if ($secure) {
-			$description = preg_replace(
-				'/(<img[^>]+src=")http:/',
-				'$1https:',
-				$description
-			);
-		}
+		$description = preg_replace(
+			'/(<img[^>]+src=")http:/',
+			'$1https:',
+			$description
+		);
 
 		if ($description == '') {
 			$description = $this->xpath->evaluate(
@@ -98,7 +96,7 @@ class NewsFlashRSSItem extends NewsFlashItem
 	// }}}
 	// {{{ public function getIcon()
 
-	public function getIcon($secure = false, $size = 32)
+	public function getIcon($size = 32)
 	{
 		$uri = null;
 
@@ -113,8 +111,8 @@ class NewsFlashRSSItem extends NewsFlashItem
 			list($base, $query) = explode('?', $media, 2);
 			$parts = explode('/', $base);
 			$hash = array_pop($parts);
-			$base = ($secure) ? 'https://secure.' : 'http://www.';
-			$uri = $base.'gravatar.com/avatar/'.$hash.'?s='.intval($size);
+			$uri = 'https://secure.gravatar.com/avatar/'
+				.$hash.'?s='.intval($size);
 		}
 
 		return $uri;
